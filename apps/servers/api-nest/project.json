@@ -1,0 +1,64 @@
+{
+  "name": "servers-api-nest",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/servers/api-nest/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/servers/api-nest",
+        "main": "apps/servers/api-nest/src/main.ts",
+        "tsConfig": "apps/servers/api-nest/tsconfig.app.json",
+        "assets": ["apps/servers/api-nest/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/servers/api-nest/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "servers-api-nest:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "servers-api-nest:build:development"
+        },
+        "production": {
+          "buildTarget": "servers-api-nest:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/servers/api-nest/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/servers/api-nest/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

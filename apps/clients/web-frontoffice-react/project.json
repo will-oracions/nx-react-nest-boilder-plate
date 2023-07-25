@@ -1,0 +1,80 @@
+{
+  "name": "clients-web-frontoffice-react",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/clients/web-frontoffice-react/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/clients/web-frontoffice-react"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "clients-web-frontoffice-react:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "clients-web-frontoffice-react:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "clients-web-frontoffice-react:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "clients-web-frontoffice-react:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "clients-web-frontoffice-react:build:development"
+        },
+        "production": {
+          "buildTarget": "clients-web-frontoffice-react:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/clients/web-frontoffice-react"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/apps/clients/web-frontoffice-react"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/clients/web-frontoffice-react/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "clients-web-frontoffice-react:build"
+      }
+    }
+  },
+  "tags": []
+}
